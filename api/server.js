@@ -23,5 +23,9 @@ server.get('/', (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`);
 });
 
+server.use('*', (_, res) => {
+  res.json({ data: 'api works, yay!' })
+})
+
 
 module.exports = server;
