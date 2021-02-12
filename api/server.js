@@ -1,5 +1,7 @@
+
 const express = require('express')
 const server = express();
+const cors = require('cors')
 const userRouter = require('../api/users/users-router')
 const postsRouter = require('../api/posts/posts-router')
 
@@ -7,7 +9,7 @@ const { logger } = require('./middleware/middleware')
 
 server.use(express.json())
 server.use(logger)
-
+server.use(cors())
 server.use('/api/users', userRouter)
 server.use('/api/posts', postsRouter)
 
@@ -20,5 +22,9 @@ server.use('/api/posts', postsRouter)
 server.get('/', (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`);
 });
+
+server.use('/api/*', (_, res) => {
+  res.json({ data: 'api is working bro' })
+})
 
 module.exports = server;
